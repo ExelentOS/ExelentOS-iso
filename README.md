@@ -10,7 +10,7 @@ nah just kidding, but this is the repo to the ExelentOS beta iso
 
 if you want to just download it, click down here
 
-[![download]](https://mega.nz/file/5Fg1lTIB#4RqoMiJpBp27LcQuRzHLCA75T5_ohqizURs2Oi43QKM)
+[![download]](https://drive.google.com/uc?export=download&id=1uE47gBHQ-F40A5t7r4EBDqAxpf2I-nHB)
 
 [download]: https://img.shields.io/badge/-DOWNLOAD-blue
 
