@@ -8,7 +8,7 @@ andromedaiso:
 build:
 	cat src/src.split* > src/src.tar.gz
 	tar -xzf src/src.tar.gz -C src/
-	grub-mkrescue -o andromeda-x86_64.iso src/srcdir/ -r -R -J -l -iso-level 3
+	grub-mkrescue -o andromeda-1.0.2-x86_64.iso src/srcdir/ -r -R -J -l -iso-level 3 -V exelentos
 	@echo "succesfully created andromeda iso"
 
 decompress:
@@ -17,7 +17,7 @@ decompress:
 	@echo "succesfully decompressed iso source directory"
 
 mkiso:
-	grub-mkrescue -o andromeda-x86_64.iso src/srcdir/ -r -R -J -l -iso-level 3
+	grub-mkrescue -o andromeda-1.0.2-x86_64.iso src/srcdir/ -r -R -J -l -iso-level 3 -V exelentos
 	@echo "succesfully generated iso image"
 
 clean:
