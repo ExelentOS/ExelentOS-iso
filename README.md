@@ -10,7 +10,7 @@ nah just kidding, but this is the repo to the ExelentOS beta iso
 
 if you want to just download it, click down here
 
-[![download]](https://drive.google.com/uc?export=download&id=1uE47gBHQ-F40A5t7r4EBDqAxpf2I-nHB)
+[![download]](https://www.mediafire.com/file/2bra0h6te2jjfgl/andromeda-1.0.2-x86_64.iso/file)
 
 [download]: https://img.shields.io/badge/-DOWNLOAD-blue
 
