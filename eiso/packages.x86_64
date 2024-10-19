@@ -89,6 +89,7 @@ partclone
 parted
 partimage
 pcsclite
+plasma-desktop
 ppp
 pptpclient
 pv
@@ -99,6 +100,7 @@ rp-pppoe
 rsync
 rxvt-unicode-terminfo
 screen
+sddm
 sdparm
 sequoia-sq
 sg3_utils
