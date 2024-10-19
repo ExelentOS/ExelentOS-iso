@@ -1,0 +1,9 @@
+NAME="Exelentos"
+PRETTY_NAME="ExelentOS"
+ID="exelent"
+ID_LIKE="arch"
+BUILD_ID=andromeda|reborn
+ANSI_COLOR="38;2;23;147;209"
+HOME_URL="https://exelentos.github.io"
+DOCUMENTATION_URL="https://exelentos.github.io/wiki.html"
+LOGO="exelentos"
