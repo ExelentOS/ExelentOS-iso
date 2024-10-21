@@ -4,3 +4,9 @@
 - created base iso repo
 - started recruiting
 - made repo and announcement 
+### october 21 2024
+- add most themes
+- make os name
+- make liveuser and groups
+- sddm and bootloaders
+- neofetch :D
