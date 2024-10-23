@@ -42,6 +42,7 @@ flatpak
 foot-terminfo
 fsarchiver
 gcc
+git
 gnu-netcat
 gpart
 gpm

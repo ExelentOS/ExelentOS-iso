@@ -10,3 +10,6 @@
 - make liveuser and groups
 - sddm and bootloaders
 - neofetch :D
+### october 23 2024
+- fix pacmankey problem
+- fix kde discover
