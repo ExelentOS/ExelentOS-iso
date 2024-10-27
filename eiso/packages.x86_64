@@ -6,6 +6,7 @@ b43-fwcutter
 base
 bcachefs-tools
 bind
+blanka-font
 bolt
 brltty
 broadcom-wl
@@ -33,6 +34,7 @@ exelentos-branding
 exelentos-hooks
 exelentos-sddm
 exelentos-themes
+exelentos-welcomeapp
 exfatprogs
 extra-cmake-modules
 f2fs-tools
@@ -43,7 +45,7 @@ foot-terminfo
 fsarchiver
 gcc
 git
-gnu-netcat
+go
 gpart
 gpm
 gptfdisk
@@ -58,6 +60,7 @@ jfsutils
 kdoctools
 kitty-terminfo
 konsole
+kscreen
 ldns
 less
 lftp
@@ -102,9 +105,11 @@ openvpn
 partclone
 parted
 partimage
+partitionmanager
 pcsclite
 plasma-desktop
 plasma-framework5
+plasma-nm
 ppp
 pptpclient
 pv
@@ -143,6 +148,8 @@ wireless-regdb
 wireless_tools
 wpa_supplicant
 wvdial
+xclip
 xfsprogs
 xl2tpd
+yay
 zsh
