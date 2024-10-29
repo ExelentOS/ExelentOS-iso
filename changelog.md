@@ -13,3 +13,9 @@
 ### october 23 2024
 - fix pacmankey problem
 - fix kde discover
+### october 29 2024
+- add applications
+- add themes
+- add skeleton
+- add welcome app
+
