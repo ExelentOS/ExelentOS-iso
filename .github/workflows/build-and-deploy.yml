@@ -3,46 +3,59 @@ name: Build and Upload ArchISO
 on:
   push:
     branches:
-      - main  # Adjust this to the branch you want to trigger the build on
+      - main  # Change to your desired branch
+  workflow_dispatch:  # Allow manual triggering
 
 jobs:
   build-and-upload:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
+      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Run Docker container with Arch Linux
+      # Step 2: Print working directory and list contents
+      - name: Print working directory and list contents
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Contents:"
+          ls -la
+
+      # Step 3: Build ArchISO in Docker
       - name: Build ArchISO in Docker
         run: |
           docker run --rm -v $PWD:/workspace -w /workspace archlinux:latest /bin/bash -c "
           pacman -Syu --noconfirm && \
           pacman -S --noconfirm archiso && \
-          mkdir -p /workspace/archiso-output && \
-          cd /workspace/ && \
-          ./scripts/rebuild_iso.sh && \
-          mkdir isodir && \
-          mv *iso* isodir
+          cd /workspace && \
+          sudo mkarchiso -v -w eisowork -o /workspace eiso
           "
 
-      # Step 3: Delete existing files on the FTP server
+      # Step 4: List built ISO files
+      - name: List built ISO files
+        run: |
+          echo "ISO files created:"
+          ls -la ./isodir
+
+      # Step 5: Delete existing files on FTP server
       - name: Delete existing files on FTP
         run: |
+          echo "Attempting to connect to FTP server and delete files..."
           lftp -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_SERVER }} -e "
-          cd /home/pfs/project/exelentos/andromeda-reborn;
+          cd /home/frs/project/neolabssoftware;
           rm -r *;
           bye;
           "
 
-      # Step 3: Upload the ISO to an FTP server
-      - name: Upload to FTP server
-        uses: sebastianpopp/ftp-action@v1.1
-        with:
-          ftp-server: ${{ secrets.FTP_SERVER }}
-          ftp-username: ${{ secrets.FTP_USERNAME }}
-          ftp-password: ${{ secrets.FTP_PASSWORD }}
-          local-folder: ./isodir/*
-          remote-folder: /home/pfs/project/exelentos/andromeda-reborn
-          args: --verbose
+      # Step 6: Upload ISO files to SourceForge
+      - name: Upload ISO files to SourceForge
+        run: |
+          echo "Uploading files to FTP..."
+          for file in isodir/*; do
+            lftp -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_SERVER }} -e "
+            put $file -o /home/frs/project/neolabssoftware/$(basename $file);
+            bye;
+            "
+          done
