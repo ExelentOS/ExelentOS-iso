@@ -44,6 +44,8 @@ jobs:
         run: |
           echo "ISO files created:"
           ls -la ./isodir
+          sudo apt update
+          sudo apt install lftp
 
       # Step 5: Delete existing files on FTP server
       - name: Delete existing files on FTP
