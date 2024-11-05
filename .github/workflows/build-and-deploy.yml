@@ -45,7 +45,7 @@ jobs:
           echo "ISO files created:"
           ls -la ./isodir
           sudo apt update
-          sudo apt install sshpass
+          sudo apt reinstall sshpass
           ssh-keyscan ${{ secrets.FTP_SERVER }} >> ~/.ssh/known_hosts
 
       # Step 5: Delete existing files on FTP server
