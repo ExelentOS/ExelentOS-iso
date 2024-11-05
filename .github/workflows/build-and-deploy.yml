@@ -40,30 +40,28 @@ jobs:
           "
 
       # Step 4: List built ISO files
-      - name: List built ISO files
+      - name: List built ISO files and install tools
         run: |
           echo "ISO files created:"
           ls -la ./isodir
           sudo apt update
-          sudo apt install lftp
+          sudo apt install sftp sshpass
 
       # Step 5: Delete existing files on FTP server
       - name: Delete existing files on FTP
         run: |
           echo "Attempting to connect to FTP server and delete files..."
-          lftp -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_SERVER }} -e "
+          sshpass -p ${{ secrets.FTP_PASSWORD }} sftp ${{ secrets.FTP_USERNAME }}'@'${{ secrets.FTP_SERVER }}  <<EOF
           cd /home/pfs/project/exelentos/andromeda-reborn;
           rm -r *;
-          bye;
-          "
-
+          EOF
+          
       # Step 6: Upload ISO files to SourceForge
       - name: Upload ISO files to SourceForge
         run: |
           echo "Uploading files to FTP..."
           for file in isodir/*; do
-            lftp -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_SERVER }} -e "
+            sshpass -p ${{ secrets.FTP_PASSWORD }} sftp ${{ secrets.FTP_USERNAME }}'@'${{ secrets.FTP_SERVER }}  <<EOF
             put $file -o /home/pfs/project/exelentos/andromeda-reborn/$(basename $file);
-            bye;
-            "
+            EOF
           done
