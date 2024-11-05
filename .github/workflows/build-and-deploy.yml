@@ -36,7 +36,7 @@ jobs:
           sudo pacman-key --lsign-key AF9C6FE4FEFB98349614C054FEB6CA0157FE8A75 && \
           sudo mkarchiso -v -w eisowork -o /workspace eiso && \
           mkdir isodir && \
-          mv *iso* isodir
+          mv *.iso* isodir
           "
 
       # Step 4: List built ISO files
