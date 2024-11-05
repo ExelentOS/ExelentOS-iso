@@ -18,4 +18,6 @@
 - add themes
 - add skeleton
 - add welcome app
-
+### november 4 2024
+- add calamares
+- fix some bugs
