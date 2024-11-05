@@ -31,6 +31,7 @@ jobs:
           pacman -Syu --noconfirm && \
           pacman -S --noconfirm archiso sudo && \
           cd /workspace && \
+          sudo pacman-key --init && \
           sudo pacman-key --recv-keys AF9C6FE4FEFB98349614C054FEB6CA0157FE8A75 && \
           sudo pacman-key --lsign-key AF9C6FE4FEFB98349614C054FEB6CA0157FE8A75 && \
           sudo mkarchiso -v -w eisowork -o /workspace eiso
