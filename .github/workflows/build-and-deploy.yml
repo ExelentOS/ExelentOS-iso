@@ -1,10 +1,11 @@
 name: Build and Upload ArchISO
 
 on:
+  # Triggers the workflow on push or pull request events but only for the "andromeda-reborn" branch
   push:
-    branches:
-      - main  # Change to your desired branch
-  workflow_dispatch:  # Allow manual triggering
+    branches: [ "andromeda-reborn" ]
+  pull_request:
+    branches: [ "andromeda-reborn" ] # Allow manual triggering
 
 jobs:
   build-and-upload:
