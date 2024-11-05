@@ -1,0 +1,48 @@
+name: Build and Upload ArchISO
+
+on:
+  push:
+    branches:
+      - main  # Adjust this to the branch you want to trigger the build on
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Run Docker container with Arch Linux
+      - name: Build ArchISO in Docker
+        run: |
+          docker run --rm -v $PWD:/workspace -w /workspace archlinux:latest /bin/bash -c "
+          pacman -Syu --noconfirm && \
+          pacman -S --noconfirm archiso && \
+          mkdir -p /workspace/archiso-output && \
+          cd /workspace/ && \
+          ./scripts/rebuild_iso.sh && \
+          mkdir isodir && \
+          mv *iso* isodir
+          "
+
+      # Step 3: Delete existing files on the FTP server
+      - name: Delete existing files on FTP
+        run: |
+          lftp -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_SERVER }} -e "
+          cd /home/pfs/project/exelentos/andromeda-reborn;
+          rm -r *;
+          bye;
+          "
+
+      # Step 3: Upload the ISO to an FTP server
+      - name: Upload to FTP server
+        uses: sebastianpopp/ftp-action@v1.1
+        with:
+          ftp-server: ${{ secrets.FTP_SERVER }}
+          ftp-username: ${{ secrets.FTP_USERNAME }}
+          ftp-password: ${{ secrets.FTP_PASSWORD }}
+          local-folder: ./isodir/*
+          remote-folder: /home/pfs/project/exelentos/andromeda-reborn
+          args: --verbose
