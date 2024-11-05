@@ -55,7 +55,7 @@ jobs:
           echo "Attempting to connect to FTP server and delete files..."
           sshpass -p ${{ secrets.FTP_PASSWORD }} sftp ${{ secrets.FTP_USERNAME }}'@'${{ secrets.FTP_SERVER }}  <<EOF
           cd /home/pfs/project/exelentos/andromeda-reborn
-          rm -r *
+          rm *
           EOF
           
       # Step 6: Upload ISO files to SourceForge
@@ -63,7 +63,6 @@ jobs:
         run: |
           echo "Uploading files to FTP..."
           for file in isodir/*; do
-            sshpass -p ${{ secrets.FTP_PASSWORD }} sftp ${{ secrets.FTP_USERNAME }}'@'${{ secrets.FTP_SERVER }}  <<EOF
-            put $file -o /home/pfs/project/exelentos/andromeda-reborn/$(basename $file)
-            EOF
+            sshpass -p ${{ secrets.FTP_PASSWORD }} sftp ${{ secrets.FTP_USERNAME }}'@'${{ secrets.FTP_SERVER }} <<< $"put $file -o /home/pfs/project/exelentos/andromeda-reborn/$(basename $file)"
+            
           done
