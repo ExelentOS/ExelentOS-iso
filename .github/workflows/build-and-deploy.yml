@@ -46,14 +46,15 @@ jobs:
           ls -la ./isodir
           sudo apt update
           sudo apt install sshpass
+          ssh-keyscan ${{ secrets.FTP_SERVER }} >> ~/.ssh/known_hosts
 
       # Step 5: Delete existing files on FTP server
       - name: Delete existing files on FTP
         run: |
           echo "Attempting to connect to FTP server and delete files..."
           sshpass -p ${{ secrets.FTP_PASSWORD }} sftp ${{ secrets.FTP_USERNAME }}'@'${{ secrets.FTP_SERVER }}  <<EOF
-          cd /home/pfs/project/exelentos/andromeda-reborn;
-          rm -r *;
+          cd /home/pfs/project/exelentos/andromeda-reborn
+          rm -r *
           EOF
           
       # Step 6: Upload ISO files to SourceForge
@@ -62,6 +63,6 @@ jobs:
           echo "Uploading files to FTP..."
           for file in isodir/*; do
             sshpass -p ${{ secrets.FTP_PASSWORD }} sftp ${{ secrets.FTP_USERNAME }}'@'${{ secrets.FTP_SERVER }}  <<EOF
-            put $file -o /home/pfs/project/exelentos/andromeda-reborn/$(basename $file);
+            put $file -o /home/pfs/project/exelentos/andromeda-reborn/$(basename $file)
             EOF
           done
