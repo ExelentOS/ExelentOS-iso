@@ -37,6 +37,9 @@ jobs:
           sudo mkarchiso -v -w eisowork -o /workspace eiso && \
           mkdir isodir && \
           mv *.iso* isodir
+          cd isodir
+          md5sum exelentos-andromeda-reborn-x86_64.iso > exelentos-andromeda-reborn-x86_64.iso.md5sum.txt
+          sha512sum exelentos-andromeda-reborn-x86_64.iso > exelentos-andromeda-reborn-x86_64.iso.sha512sum.txt
           "
 
       # Step 4: List built ISO files
@@ -63,8 +66,6 @@ jobs:
         run: |
           echo "Uploading files to FTP..."
           cd isodir
-          sudo md5sum exelentos-andromeda-reborn-x86_64.iso > exelentos-andromeda-reborn-x86_64.iso.md5sum.txt
-          sudo sha512sum exelentos-andromeda-reborn-x86_64.iso > exelentos-andromeda-reborn-x86_64.iso.sha512sum.txt
           cd ..
           for file in isodir/*; do
             sshpass -p ${{ secrets.FTP_PASSWORD }} sftp ${{ secrets.FTP_USERNAME }}'@'${{ secrets.FTP_SERVER }} <<< $"put $file /home/pfs/project/exelentos/andromeda-reborn/$(basename $file)"
