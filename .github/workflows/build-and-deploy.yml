@@ -63,6 +63,6 @@ jobs:
         run: |
           echo "Uploading files to FTP..."
           for file in isodir/*; do
-            sshpass -p ${{ secrets.FTP_PASSWORD }} sftp ${{ secrets.FTP_USERNAME }}'@'${{ secrets.FTP_SERVER }} <<< $"put $file -o /home/pfs/project/exelentos/andromeda-reborn/$(basename $file)"
+            sshpass -p ${{ secrets.FTP_PASSWORD }} sftp ${{ secrets.FTP_USERNAME }}'@'${{ secrets.FTP_SERVER }} <<< $"put $file /home/pfs/project/exelentos/andromeda-reborn/$file"
             
           done
