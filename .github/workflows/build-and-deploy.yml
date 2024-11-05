@@ -46,6 +46,7 @@ jobs:
           ls -la ./isodir
           sudo apt update
           sudo apt reinstall sshpass
+          mkdir ~/.ssh/
           ssh-keyscan ${{ secrets.FTP_SERVER }} >> ~/.ssh/known_hosts
 
       # Step 5: Delete existing files on FTP server
