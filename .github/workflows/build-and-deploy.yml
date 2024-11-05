@@ -27,7 +27,7 @@ jobs:
       # Step 3: Build ArchISO in Docker
       - name: Build ArchISO in Docker
         run: |
-          docker run --rm -v $PWD:/workspace -w /workspace archlinux:latest /bin/bash -c "
+          docker run --rm --privileged -v $PWD:/workspace -w /workspace archlinux:latest /bin/bash -c "
           pacman -Syu --noconfirm && \
           pacman -S --noconfirm archiso sudo && \
           cd /workspace && \
