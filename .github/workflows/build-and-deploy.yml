@@ -34,7 +34,9 @@ jobs:
           sudo pacman-key --init && \
           sudo pacman-key --recv-keys AF9C6FE4FEFB98349614C054FEB6CA0157FE8A75 && \
           sudo pacman-key --lsign-key AF9C6FE4FEFB98349614C054FEB6CA0157FE8A75 && \
-          sudo mkarchiso -v -w eisowork -o /workspace eiso
+          sudo mkarchiso -v -w eisowork -o /workspace eiso && \
+          mkdir isodir && \
+          mv *iso* isodir
           "
 
       # Step 4: List built ISO files
@@ -48,7 +50,7 @@ jobs:
         run: |
           echo "Attempting to connect to FTP server and delete files..."
           lftp -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_SERVER }} -e "
-          cd /home/frs/project/neolabssoftware;
+          cd /home/pfs/project/exelentos/andromeda-reborn;
           rm -r *;
           bye;
           "
@@ -59,7 +61,7 @@ jobs:
           echo "Uploading files to FTP..."
           for file in isodir/*; do
             lftp -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_SERVER }} -e "
-            put $file -o /home/frs/project/neolabssoftware/$(basename $file);
+            put $file -o /home/pfs/project/exelentos/andromeda-reborn/$(basename $file);
             bye;
             "
           done
