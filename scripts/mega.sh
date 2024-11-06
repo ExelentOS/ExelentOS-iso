@@ -25,12 +25,6 @@ fi
 echo "Removing "$REMOTE_PATH$LOCAL_PATH
 mega-rm "$REMOTE_PATH""$LOCAL_PATH" 
 
-# Check if removal was successful
-if [ $? -ne 0 ]; then
-    echo "Removal failed. Exiting."
-    exit 1
-fi
-
 # Upload the file or folder
 echo "Uploading $LOCAL_PATH to $REMOTE_PATH..."
 mega-put "$LOCAL_PATH" "$REMOTE_PATH"
