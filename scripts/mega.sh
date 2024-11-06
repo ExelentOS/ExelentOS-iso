@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Replace these with your actual MEGA account credentials
-EMAIL="thayeeboi890@gmail.com"
+EMAIL="$4"
 PASSWORD="$3"
 
 # Specify the local file or folder to upload
