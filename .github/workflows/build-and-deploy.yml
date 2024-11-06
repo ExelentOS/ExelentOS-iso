@@ -66,11 +66,9 @@ jobs:
       - name: Upload ISO files to SourceForge and update on Mega
         run: |
           echo "Uploading files to FTP..."
-          cd isodir
-          cd ..
           for file in isodir/*; do
             sshpass -p ${{ secrets.FTP_PASSWORD }} sftp ${{ secrets.FTP_USERNAME }}'@'${{ secrets.FTP_SERVER }} <<< $"put $file /home/pfs/project/exelentos/andromeda-reborn/$(basename $file)"
             cd  isodir
-            bash ./scripts/mega.sh ${{ secrets.MEGA_EMAIL }} '${{ secrets.FTP_PASSWORD }}' /andromeda-reborn/ $(basename $file)
+            bash ../scripts/mega.sh ${{ secrets.MEGA_EMAIL }} '${{ secrets.FTP_PASSWORD }}' /andromeda-reborn/ $(basename $file)
             cd ..
           done
