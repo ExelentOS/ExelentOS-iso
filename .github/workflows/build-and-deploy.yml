@@ -6,6 +6,8 @@ on:
     branches: [ "andromeda-reborn" ]
   pull_request:
     branches: [ "andromeda-reborn" ] # Allow manual triggering
+  repository_dispatch:
+    types: [trigger-event]
 
 jobs:
   build-and-upload:
