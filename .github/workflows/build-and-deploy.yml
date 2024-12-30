@@ -6,10 +6,12 @@ on:
     branches: [ "andromeda-reborn" ]
   pull_request:
     branches: [ "andromeda-reborn" ] # Allow manual triggering
+  repository_dispatch:
+    types: [trigger-event]
 
 jobs:
   build-and-upload:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       # Step 1: Checkout repository
@@ -42,13 +44,14 @@ jobs:
           sha512sum exelentos-andromeda-reborn-x86_64.iso > exelentos-andromeda-reborn-x86_64.iso.sha512sum.txt
           "
 
-      # Step 4: List built ISO files
-      - name: List built ISO files and install tools
+      # Step 4: List built ISO files and prepare
+      - name: List built ISO files and prepare
         run: |
           echo "ISO files created:"
           ls -la ./isodir
           sudo apt update
           sudo apt reinstall sshpass
+          sudo bash -c "apt update ; apt install wget ; wget https://mega.nz/linux/repo/xUbuntu_22.04/amd64/megacmd-xUbuntu_22.04_amd64.deb ; apt install ./*deb"
           mkdir ~/.ssh/
           ssh-keyscan ${{ secrets.FTP_SERVER }} >> ~/.ssh/known_hosts
 
@@ -61,13 +64,13 @@ jobs:
           rm *
           EOF
           
-      # Step 6: Upload ISO files to SourceForge
-      - name: Upload ISO files to SourceForge
+      # Step 6: Upload ISO files to SourceForge and mega
+      - name: Upload ISO files to SourceForge and update on Mega
         run: |
           echo "Uploading files to FTP..."
-          cd isodir
-          cd ..
           for file in isodir/*; do
             sshpass -p ${{ secrets.FTP_PASSWORD }} sftp ${{ secrets.FTP_USERNAME }}'@'${{ secrets.FTP_SERVER }} <<< $"put $file /home/pfs/project/exelentos/andromeda-reborn/$(basename $file)"
-            
+            cd  isodir
+            bash ../scripts/mega.sh ${{ secrets.MEGA_EMAIL }} '${{ secrets.FTP_PASSWORD }}' /andromeda-reborn/ $(basename $file)
+            cd ..
           done
